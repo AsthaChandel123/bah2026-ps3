@@ -1,0 +1,8 @@
+# @package dates
+name: train
+description: Multi-year training window for Objective-1 surface models.
+start: "2019-01-01"
+end: "2023-12-31"
+freq: D
+holdout_start: "2023-01-01"   # locked temporal hold-out (forward-chaining)
+holdout_end: "2023-12-31"

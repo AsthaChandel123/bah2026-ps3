@@ -1,0 +1,6 @@
+# @package aoi
+name: igp
+description: Indo-Gangetic Plain (Punjab through West Bengal).
+bbox: [73.0, 24.0, 88.0, 31.0]
+crs: EPSG:4326
+utm: [EPSG:32643, EPSG:32644]

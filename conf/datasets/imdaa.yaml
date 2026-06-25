@@ -1,0 +1,11 @@
+# @package datasets.imdaa
+# IMDAA 12km Indian regional reanalysis (best-resolution India met).
+name: imdaa
+provider: NCMRWF (India)
+access: http_download
+endpoint: https://nwp.ncmrwf.gov.in/reanalysis
+variables: [HPBL, 10m_u, 10m_v, 2m_temperature, 2m_rh, precipitation, ssrd]
+resolution_deg: 0.12
+cadence: hourly
+coverage: 1979-2018 (extended)
+role: highest-resolution India BLH/wind/T/RH met predictor

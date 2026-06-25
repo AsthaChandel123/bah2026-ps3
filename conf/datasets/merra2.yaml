@@ -1,0 +1,13 @@
+# @package datasets.merra2
+# MERRA-2 aerosol + flux diagnostics (gap-free; PBLH; speciated PM).
+name: merra2
+provider: NASA GMAO / GES DISC
+access: earthaccess
+gee_collection: NASA/GSFC/MERRA/aer/2
+collections:
+  aer: M2T1NXAER          # AOD (TOTEXTTAU), BC/OC/dust/SO4/sea-salt mass
+  flx: M2T1NXFLX          # PBLH, surface fluxes
+variables: [TOTEXTTAU, BCSMASS, OCSMASS, DUSMASS, DUSMASS25, SSSMASS, SO4SMASS, PBLH]
+resolution_deg: [0.5, 0.625]
+cadence: hourly time-averaged
+role: gap-free speciated aerosol prior + PBLH; PM2.5 ~ 1.375*SO4 + 1.6*OC + BC + dust25 + ss25

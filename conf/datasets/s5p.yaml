@@ -1,0 +1,35 @@
+# @package datasets.s5p
+# Sentinel-5P TROPOMI L3 trace-gas columns (Google Earth Engine native).
+name: s5p
+provider: ESA/Copernicus via Google Earth Engine
+access: gee
+gee_collections:
+  no2:    COPERNICUS/S5P/OFFL/L3_NO2
+  so2:    COPERNICUS/S5P/OFFL/L3_SO2
+  co:     COPERNICUS/S5P/OFFL/L3_CO
+  o3:     COPERNICUS/S5P/OFFL/L3_O3
+  hcho:   COPERNICUS/S5P/OFFL/L3_HCHO
+  ch4:    COPERNICUS/S5P/OFFL/L3_CH4
+  aer_ai: COPERNICUS/S5P/OFFL/L3_AER_AI
+  aer_lh: COPERNICUS/S5P/OFFL/L3_AER_LH
+  cloud:  COPERNICUS/S5P/OFFL/L3_CLOUD
+bands:
+  no2:  tropospheric_NO2_column_number_density
+  so2:  SO2_column_number_density
+  co:   CO_column_number_density
+  o3:   O3_column_number_density
+  hcho: tropospheric_HCHO_column_number_density
+qa_thresholds:    # qa_value floor per product
+  no2: 0.75
+  so2: 0.50
+  co: 0.50
+  o3: 0.50
+  hcho: 0.50
+  aer_lh: 0.50
+units: mol/m2
+overpass_lt: "13:30"
+scale_m: 1113
+notes: >-
+  Train on RPRO/OFFL (fixes pre-v2.4 NO2 polluted-scene low bias); infer daily on
+  NRTI/OFFL. HCHO is noisiest (single-pixel error 30-100%); average to 0.05-0.1 deg
+  and 8-day/monthly before hotspot detection.

@@ -1,0 +1,7 @@
+# @package dates
+name: burn_oct_nov
+description: Post-monsoon paddy-residue burning (dominant Delhi-NCR HCHO event).
+start: "2022-10-01"
+end: "2022-11-30"
+freq: D
+season: post_monsoon

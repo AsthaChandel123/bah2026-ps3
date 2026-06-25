@@ -1,0 +1,29 @@
+# Root Hydra config for aqi_india. Compose with group overrides, e.g.
+#   aqi train aoi=igp dates=burn_oct_nov model=saconvlstm
+defaults:
+  - aoi: india
+  - dates: train
+  - grid: latlon_0p05
+  - datasets: cpcb
+  - model: cnn_lstm
+  - aqi: cpcb_naqi
+  - hotspot: getis_ord
+  - _self_
+
+project:
+  name: aqi-india
+  version: "0.1.0"
+  seed: 42
+
+paths:
+  data_raw: data/raw
+  data_interim: data/interim
+  data_processed: data/processed
+  models: data/models
+  artifacts: data/artifacts
+  reports: reports
+
+run:
+  device: cpu          # cpu | cuda
+  num_workers: 4
+  log_level: INFO

@@ -1,0 +1,15 @@
+# @package model
+name: cnn_lstm
+description: PS-mandated CNN-LSTM hybrid (CNN per-step spatial encoder -> LSTM temporal).
+type: deep
+requires_extra: deep
+target: [pm25, pm10, no2, so2, co, o3]
+in_channels: 20
+cnn: {channels: [32, 64, 128], kernel_size: 3}
+lstm: {hidden_size: 128, num_layers: 2, dropout: 0.2}
+seq_len: 7
+loss: masked_huber
+optimizer: {name: adam, lr: 0.001}
+epochs: 50
+batch_size: 16
+seed: 42

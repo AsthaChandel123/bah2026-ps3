@@ -1,0 +1,5 @@
+# @package grid
+name: latlon_1km
+kind: latlon
+resolution_deg: 0.009  # ~1 km downscaled product grid
+bbox: [68.0, 6.0, 98.0, 38.0]

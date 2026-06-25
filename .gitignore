@@ -32,12 +32,15 @@ dist/
 htmlcov/
 
 # ----------------------------------------------------------------------------
-# Data & artifacts (large / regenerable)
+# Data & artifacts (large / regenerable) — keep the directory skeleton (.gitkeep)
 # ----------------------------------------------------------------------------
-data/raw/
-data/interim/
-data/processed/
-data/external/
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+data/models/*
+data/artifacts/*
+!data/**/.gitkeep
 
 # Geospatial / scientific array formats
 *.nc
@@ -95,3 +98,20 @@ dist/
 # Keep directory structure trackable
 # ----------------------------------------------------------------------------
 !.gitkeep
+
+# ----------------------------------------------------------------------------
+# Always track: bundled package data assets and report figures
+# (override the broad scientific-format ignores above).
+# ----------------------------------------------------------------------------
+!src/aqi_india/data/**
+!reports/**
+# ...but never re-include Python bytecode caches.
+src/aqi_india/data/**/__pycache__/
+reports/**/__pycache__/
+
+# ----------------------------------------------------------------------------
+# Hydra / MLflow / compiled extensions
+# ----------------------------------------------------------------------------
+.hydra/
+mlruns/
+*.so

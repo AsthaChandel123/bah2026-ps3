@@ -1,0 +1,13 @@
+# @package model
+name: gnn
+description: Wind-adjacency spatio-temporal GNN (A3TGCN / GConvLSTM) over CPCB stations.
+type: deep
+requires_extra: deep
+target: [pm25, no2, o3]
+graph: {adjacency: wind_advection, k_neighbors: 8, dynamic: true}
+hidden_size: 64
+n_layers: 2
+seq_len: 7
+optimizer: {name: adam, lr: 0.005}
+epochs: 80
+seed: 42

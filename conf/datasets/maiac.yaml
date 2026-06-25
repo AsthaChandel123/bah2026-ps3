@@ -1,0 +1,13 @@
+# @package datasets.maiac
+# MODIS MAIAC 1km AOD — the quantitative AOD backbone (GEE native).
+name: maiac
+provider: NASA LP DAAC via Google Earth Engine
+access: gee
+gee_collection: MODIS/061/MCD19A2_GRANULES
+bands:
+  aod_055: Optical_Depth_055   # primary for PM2.5
+  aod_047: Optical_Depth_047
+resolution_km: 1
+cadence: twice-daily (Terra ~10:30, Aqua ~13:30 LT)
+role: primary 1km AOD anchor for AOD->PM2.5
+validate_against: AERONET L2 (Kanpur, Gandhi_College, Jaipur, Pune)
