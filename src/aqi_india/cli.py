@@ -192,13 +192,50 @@ def serve_dashboard() -> None:
 # demo                                                                         #
 # --------------------------------------------------------------------------- #
 @demo_app.command("run")
-def demo_run() -> None:
-    """Run the light synthetic end-to-end demo (no credentialed deps)."""
-    _wired_later(
-        "demo run",
-        "Would synthesize a tiny India grid + CPCB stations + fires and run the "
-        "full pipeline (fusion -> features -> model -> NAQI maps -> hotspots) on "
-        "the light dependency set.",
+def demo_run(
+    root: str = typer.Option(".", help="Project root for data/ and reports/."),
+    n_days: int = typer.Option(60, help="Synthetic daily steps."),
+    n_stations: int = typer.Option(120, help="Synthetic CPCB stations."),
+    resolution: float = typer.Option(0.25, help="Grid resolution (deg)."),
+    seed: int = typer.Option(42, help="Master RNG seed."),
+) -> None:
+    """Run the light synthetic end-to-end demo (no credentialed deps).
+
+    Synthesizes a tiny India grid + CPCB stations + fires and runs the full
+    two-objective pipeline (fusion -> features -> LightGBM + CV ladder -> NAQI
+    maps; HCHO hotspots -> EHSA -> fire-HCHO correlation -> transport) on the
+    light dependency set, writing PNGs to ``reports/figures/`` and a summary to
+    ``docs/RESULTS.md``.
+    """
+    # Imported lazily so `aqi --help` never pays the heavy-ish module import cost.
+    from aqi_india.demo import run_demo
+
+    console.print(
+        Panel(
+            "[cyan]Running the offline synthetic end-to-end demo "
+            "(Objective 1 + Objective 2).[/cyan]\n"
+            "[dim]This uses only the light dependency set — no credentials or "
+            "network.[/dim]",
+            title="aqi demo run",
+            border_style="green",
+        )
+    )
+    summary = run_demo(
+        root,
+        n_days=n_days,
+        n_stations=n_stations,
+        resolution=resolution,
+        seed=seed,
+    )
+    figures = summary["obj1"]["figures"] + summary["obj2"]["figures"]
+    table = Table(title="Demo artifacts", show_header=True, header_style="bold")
+    table.add_column("figure")
+    for fig_name in figures:
+        table.add_row(f"reports/figures/{fig_name}")
+    console.print(table)
+    console.print(
+        f"[green]Done in {summary['meta']['wall_seconds']:.1f}s.[/green] "
+        "Metrics summary written to [b]docs/RESULTS.md[/b]."
     )
 
 

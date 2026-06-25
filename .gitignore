@@ -58,11 +58,16 @@ data/artifacts/*
 
 # Model checkpoints & serialized objects
 models/checkpoints/
+models/artifacts/
 *.pt
 *.pth
 *.ckpt
+*.onnx
 *.joblib
 *.pkl
+
+# Large regenerable synthetic data dumps (kept out of git; regenerate via `aqi demo run`)
+data/synthetic/
 
 # Run outputs & logs
 outputs/

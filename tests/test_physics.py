@@ -73,8 +73,9 @@ def test_relative_humidity_from_dewpoint_bounds() -> None:
     # Drier air (Td < T) => RH < 100.
     rh = physics.relative_humidity_from_dewpoint(300.0, 290.0)
     assert 0.0 < rh < 100.0
-    # Celsius path agrees with Kelvin path.
-    rh_c = physics.relative_humidity_from_dewpoint(27.0, 17.0, kelvin=False)
+    # Celsius path agrees with Kelvin path (same physical state: 300 K = 26.85 C,
+    # 290 K = 16.85 C).
+    rh_c = physics.relative_humidity_from_dewpoint(26.85, 16.85, kelvin=False)
     assert np.isclose(rh, rh_c, atol=1e-6)
 
 
