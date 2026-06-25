@@ -1,0 +1,97 @@
+# ============================================================================
+# BAH 2026 PS3 — .gitignore
+# Python + geospatial + ML + web project
+#
+# Tracks source, docs, and config. Excludes generated artifacts, large data,
+# model checkpoints, secrets, and environment/editor cruft.
+# Note: data/ directory layout stays trackable via .gitkeep files (not ignored).
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Python
+# ----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyc
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+*.egg
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+dist/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+
+# ----------------------------------------------------------------------------
+# Data & artifacts (large / regenerable)
+# ----------------------------------------------------------------------------
+data/raw/
+data/interim/
+data/processed/
+data/external/
+
+# Geospatial / scientific array formats
+*.nc
+*.nc4
+*.tif
+*.tiff
+*.zarr/
+*.h5
+*.hdf
+*.grib
+*.grib2
+*.parquet
+*.npy
+*.npz
+
+# Model checkpoints & serialized objects
+models/checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.joblib
+*.pkl
+
+# Run outputs & logs
+outputs/
+logs/
+*.log
+
+# ----------------------------------------------------------------------------
+# Secrets & credentials (NEVER commit)
+# ----------------------------------------------------------------------------
+.env
+.env.*
+*.key
+service-account*.json
+.earthengine/
+credentials*.json
+
+# ----------------------------------------------------------------------------
+# Node / web
+# ----------------------------------------------------------------------------
+node_modules/
+.next/
+dist/
+
+# ----------------------------------------------------------------------------
+# OS & editor
+# ----------------------------------------------------------------------------
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# ----------------------------------------------------------------------------
+# Keep directory structure trackable
+# ----------------------------------------------------------------------------
+!.gitkeep
