@@ -34,6 +34,7 @@ dependencies = [
     "rioxarray>=0.15",
     "xarray>=2023.12",
     "netCDF4>=1.6",
+    "pyarrow>=14.0",
     "esda>=2.5",
     "libpysal>=4.9",
     "splot>=1.1.5",
