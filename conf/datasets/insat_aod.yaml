@@ -1,0 +1,16 @@
+# @package datasets.insat_aod
+# INSAT-3D/3DR Imager AOD 550nm (PS-mandated; geostationary, NOT GEE-native).
+name: insat_aod
+provider: ISRO MOSDAC / VEDAS
+access: http_download
+endpoints:
+  mosdac: https://www.mosdac.gov.in/insat-3d-data-products
+  vedas: https://vedas.sac.gov.in
+product: INSAT-3D/3DR Imager L2 AOD 550nm
+format: HDF5
+resolution_km: [4, 8]
+cadence_min: 30
+role: diurnal/cloud AOD gap-fill; bias-correct against MAIAC 1km via quantile mapping
+notes: >-
+  Poor AERONET correlation vs MODIS; use for cadence/diurnal gap-fill only.
+  Requires free MOSDAC registration. Regrid HDF5 to the common grid.

@@ -1,0 +1,13 @@
+# @package hotspot
+name: hysplit
+method: hysplit_trajectories
+description: ERA5-driven HYSPLIT back/forward trajectories + clustering.
+requires_extra: transport
+hours: 120
+heights_m_agl: [500, 1000]
+release_lt: "13:30"
+receptors: [Delhi, Lucknow, Kanpur, Patna]
+met: era5
+cluster: {method: angle, source: openair_trajCluster}
+receptor_apportionment: [cwt, pscf]
+grid_deg: 0.25

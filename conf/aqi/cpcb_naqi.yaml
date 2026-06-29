@@ -1,0 +1,21 @@
+# @package aqi
+# CPCB (2014) National AQI breakpoint constants. Authoritative encoding lives in
+# aqi_india.aqi.breakpoints; this file documents them for config-driven runs.
+name: cpcb_naqi
+standard: CPCB 2014 National Air Quality Index
+aqi_category_edges: [0, 50, 100, 200, 300, 400, 500]
+category_names: [Good, Satisfactory, Moderate, Poor, "Very Poor", Severe]
+category_colors: ["#009865", "#A3C853", "#FFF833", "#F29C33", "#E93F33", "#AF2D24"]
+min_valid_pollutants: 3
+require_pm: true            # >=1 of pm25/pm10 must be present
+breakpoints:                # lower edges of the 6 bands + top cap (length 7)
+  pm25: [0, 30, 60, 90, 120, 250, 380]      # ug/m3, 24h
+  pm10: [0, 50, 100, 250, 350, 430, 510]    # ug/m3, 24h
+  no2:  [0, 40, 80, 180, 280, 400, 520]     # ug/m3, 24h
+  so2:  [0, 40, 80, 380, 800, 1600, 2620]   # ug/m3, 24h
+  co:   [0, 1.0, 2.0, 10, 17, 34, 51]       # mg/m3, 8h  (NOT ug/m3)
+  o3:   [0, 50, 100, 168, 208, 748, 1288]   # ug/m3, 8h
+  nh3:  [0, 200, 400, 800, 1200, 1800, 2400]# ug/m3, 24h
+  pb:   [0, 0.5, 1.0, 2.0, 3.0, 3.5, 4.0]   # ug/m3, 24h
+averaging_hours: {pm25: 24, pm10: 24, no2: 24, so2: 24, co: 8, o3: 8, nh3: 24, pb: 24}
+units: {co: mg/m3, default: ug/m3}

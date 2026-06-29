@@ -1,0 +1,6 @@
+# @package aoi
+name: punjab_haryana
+description: Punjab + Haryana stubble-burning source region (Objective-2).
+bbox: [73.5, 28.5, 77.5, 32.5]
+crs: EPSG:4326
+utm: [EPSG:32643]

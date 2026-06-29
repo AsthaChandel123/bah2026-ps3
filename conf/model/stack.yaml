@@ -1,0 +1,9 @@
+# @package model
+name: stack
+description: GP-blended stacking ensemble (SA-ConvLSTM + GNN + LightGBM).
+type: ensemble
+requires_extra: deep
+members: [saconvlstm, gnn, lightgbm]
+blender: {name: gaussian_process, kernel: anisotropic_rbf}
+uq: {method: split_conformal, alpha: 0.1, deep_ensemble_members: 5}
+seed: 42

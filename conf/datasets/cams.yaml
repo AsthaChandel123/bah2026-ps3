@@ -1,0 +1,12 @@
+# @package datasets.cams
+# CAMS EAC4 / NRT gap-free composition prior (download; never reimplement 4D-Var).
+name: cams
+provider: ECMWF Copernicus ADS
+access: cdsapi
+datasets:
+  eac4: cams-global-reanalysis-eac4
+  nrt: cams-global-atmospheric-composition-forecasts
+variables: [pm2p5, pm10, no2, so2, co, go3, hcho, aod550]
+resolution_deg: 0.4
+cadence: 3-hourly (EAC4) / hourly (NRT)
+role: L0 gap-free physical prior + ML feature channels; fills cloud-masked pixels

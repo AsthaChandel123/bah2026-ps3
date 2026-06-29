@@ -1,0 +1,8 @@
+# @package hotspot
+name: stdbscan
+method: st_dbscan
+description: ST-DBSCAN multi-day plume episode clustering for transport overlay.
+eps_spatial_km: 25
+eps_temporal_days: 2
+min_samples: 5
+metric: haversine

@@ -1,0 +1,122 @@
+# ============================================================================
+# BAH 2026 PS3 — .gitignore
+# Python + geospatial + ML + web project
+#
+# Tracks source, docs, and config. Excludes generated artifacts, large data,
+# model checkpoints, secrets, and environment/editor cruft.
+# Note: data/ directory layout stays trackable via .gitkeep files (not ignored).
+# ============================================================================
+
+# ----------------------------------------------------------------------------
+# Python
+# ----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyc
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+*.egg
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+dist/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+
+# ----------------------------------------------------------------------------
+# Data & artifacts (large / regenerable) — keep the directory skeleton (.gitkeep)
+# ----------------------------------------------------------------------------
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+data/models/*
+data/artifacts/*
+!data/**/.gitkeep
+
+# Geospatial / scientific array formats
+*.nc
+*.nc4
+*.tif
+*.tiff
+*.zarr/
+*.h5
+*.hdf
+*.grib
+*.grib2
+*.parquet
+*.npy
+*.npz
+
+# Model checkpoints & serialized objects
+models/checkpoints/
+models/artifacts/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.joblib
+*.pkl
+
+# Large regenerable synthetic data dumps (kept out of git; regenerate via `aqi demo run`)
+data/synthetic/
+
+# Run outputs & logs
+outputs/
+logs/
+*.log
+
+# ----------------------------------------------------------------------------
+# Secrets & credentials (NEVER commit)
+# ----------------------------------------------------------------------------
+.env
+.env.*
+*.key
+service-account*.json
+.earthengine/
+credentials*.json
+
+# ----------------------------------------------------------------------------
+# Node / web
+# ----------------------------------------------------------------------------
+node_modules/
+.next/
+dist/
+
+# ----------------------------------------------------------------------------
+# OS & editor
+# ----------------------------------------------------------------------------
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# ----------------------------------------------------------------------------
+# Keep directory structure trackable
+# ----------------------------------------------------------------------------
+!.gitkeep
+
+# ----------------------------------------------------------------------------
+# Always track: bundled package data assets and report figures
+# (override the broad scientific-format ignores above).
+# ----------------------------------------------------------------------------
+!src/aqi_india/data/**
+!reports/**
+# ...but never re-include Python bytecode caches.
+src/aqi_india/data/**/__pycache__/
+reports/**/__pycache__/
+
+# ----------------------------------------------------------------------------
+# Hydra / MLflow / compiled extensions
+# ----------------------------------------------------------------------------
+.hydra/
+mlruns/
+*.so

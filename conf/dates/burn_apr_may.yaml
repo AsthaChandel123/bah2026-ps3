@@ -1,0 +1,7 @@
+# @package dates
+name: burn_apr_may
+description: Pre-monsoon wheat-residue + forest-fire burning season.
+start: "2022-04-01"
+end: "2022-05-31"
+freq: D
+season: pre_monsoon

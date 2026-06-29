@@ -1,0 +1,10 @@
+# @package hotspot
+name: getis_ord
+method: getis_ord_gi_star
+description: Getis-Ord Gi* hotspot detection (primary, reviewer-trusted).
+star: true
+weights: {kind: knn, k: 8}      # or distance_band
+permutations: 999
+fdr: true
+alpha: 0.01
+standardize: robust_z          # per-season median/MAD before detection

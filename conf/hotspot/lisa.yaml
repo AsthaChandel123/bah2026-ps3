@@ -1,0 +1,8 @@
+# @package hotspot
+name: lisa
+method: local_morans_i
+description: Local Moran's I / LISA (HH core clusters, HL fresh-fire outliers).
+weights: {kind: knn, k: 8}
+permutations: 999
+alpha: 0.05
+report_quadrants: [HH, HL]

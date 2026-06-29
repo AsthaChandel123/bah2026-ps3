@@ -1,0 +1,17 @@
+# @package datasets.cpcb
+# CPCB CAAQMS ground-truth labels (the y target; RMSE/R/MAE reference).
+name: cpcb
+provider: Central Pollution Control Board (India)
+access: http_api
+ogd_resource_id: 3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69
+ogd_template: "https://api.data.gov.in/resource/{resource_id}?api-key={KEY}&format=json"
+portal: https://airquality.cpcb.gov.in/ccr/
+api_key_env: DATA_GOV_IN_API_KEY
+historical_scrapers: [cpcbccr-python-client, gsidhu/cpcbccr-data-scraper]
+pollutants: [pm25, pm10, no2, so2, co, o3, nh3]
+units: {co: mg/m3, default: ug/m3}
+qa:
+  min_hourly_completeness: 0.75
+  drop: [negatives, flatlines, stuck-values]
+n_stations: ~500
+role: PRIMARY training labels and validation reference

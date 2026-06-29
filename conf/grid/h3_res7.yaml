@@ -1,0 +1,5 @@
+# @package grid
+name: h3_res7
+kind: h3
+resolution: 7          # ~5.16 km average edge length; universal fusion join key
+parent_resolution: 4   # IGP rollups

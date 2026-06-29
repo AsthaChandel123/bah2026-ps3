@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>aqi_india — BAH 2026 PS3 — Results Dashboard</title>
+<style>
+  :root{
+    --bg:#0b1020; --panel:#141b30; --panel2:#1b2540; --ink:#e8edf7; --muted:#9fb0cf;
+    --accent:#4cc9f0; --good:#3ddc84; --warn:#ffb454; --bad:#ff6b6b; --line:#27324f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0b1020,#0d1428);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55}
+  a{color:var(--accent)}
+  header{padding:38px 22px 14px;max-width:1140px;margin:0 auto}
+  h1{font-size:1.9rem;margin:0 0 6px}
+  h2{font-size:1.3rem;margin:34px 0 10px;border-left:4px solid var(--accent);padding-left:10px}
+  h3{font-size:1.02rem;margin:18px 0 8px;color:var(--muted)}
+  .sub{color:var(--muted);font-size:.98rem}
+  main{max-width:1140px;margin:0 auto;padding:0 22px 70px}
+  .tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.04em;
+    padding:3px 9px;border-radius:999px;vertical-align:middle}
+  .tag-real{background:rgba(61,220,132,.16);color:var(--good);border:1px solid rgba(61,220,132,.4)}
+  .tag-syn{background:rgba(255,180,84,.15);color:var(--warn);border:1px solid rgba(255,180,84,.4)}
+  .banner{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:18px 0}
+  .banner.real{border-color:rgba(61,220,132,.35)}
+  .banner.syn{border-color:rgba(255,180,84,.35)}
+  .grid{display:grid;gap:18px}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .figs{grid-template-columns:repeat(auto-fit,minmax(330px,1fr))}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .card .k{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .card .v{font-size:1.5rem;font-weight:700;margin-top:4px}
+  .card .v.good{color:var(--good)} .card .v.warn{color:var(--warn)}
+  figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  figure img{width:100%;display:block;background:#fff}
+  figcaption{padding:10px 14px;font-size:.86rem;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:6px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.03em}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.84rem}
+  .pill{display:inline-block;padding:2px 8px;border-radius:6px;background:var(--panel2);
+    border:1px solid var(--line);margin:2px 4px 2px 0;font-size:.82rem;color:var(--muted)}
+  .ok{color:var(--good)} .no{color:var(--bad)} .mid{color:var(--warn)}
+  .scroll{overflow-x:auto}
+  footer{max-width:1140px;margin:0 auto;padding:24px 22px 60px;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:780px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>aqi_india &mdash; Surface AQI &amp; HCHO Hotspots over India</h1>
+  <div class="sub">BAH 2026 (ISRO) Problem Statement 3 &nbsp;&middot;&nbsp; results &amp; live-data verification dashboard
+    &nbsp;&middot;&nbsp; generated 2026-06-26</div>
+  <div class="banner" style="margin-top:16px">
+    <strong>Data provenance &mdash; read this first.</strong>
+    This page mixes two clearly-labelled kinds of data. The
+    <span class="tag tag-real">LIVE&nbsp;REAL</span> panel shows ground-station readings actually fetched from a
+    live government API at build time. Every figure in the Objective&nbsp;1 / Objective&nbsp;2 sections is marked
+    <span class="tag tag-syn">SYNTHETIC&nbsp;DEMO</span>: those are products of the package's offline synthetic
+    pipeline (<span class="mono">aqi demo run</span>) and validate the <em>method &amp; plumbing</em>, not real-world
+    skill. Nothing synthetic is presented as real.
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ REAL DATA ============ -->
+  <h2>1 &nbsp; Live real ground-station data <span class="tag tag-real">LIVE&nbsp;REAL</span></h2>
+  <div class="banner real">
+    Fetched at build time from the Government of India Open Data (OGD) platform &mdash; the CPCB
+    &ldquo;Real-time Air Quality Index from various locations&rdquo; resource. This is genuine live
+    CPCB&nbsp;CAAQMS data, not synthetic.
+    <div class="scroll" style="margin-top:12px">
+    <table class="mono">
+      <tr><td>Endpoint</td><td>https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69</td></tr>
+      <tr><td>HTTP status</td><td><span class="ok">200 OK</span> (through egress proxy)</td></tr>
+      <tr><td>Records available</td><td>3&nbsp;535 station&times;pollutant rows in the live snapshot</td></tr>
+      <tr><td>Feed updated</td><td>2026-06-26T15:02:13Z</td></tr>
+      <tr><td>Reading timestamp</td><td>26-06-2026 20:00:00 IST (all sampled rows)</td></tr>
+      <tr><td>Coverage sampled</td><td>10 states, 17 cities &rarr; 20 unique stations through the repo adapter</td></tr>
+      <tr><td>Pollutants</td><td>PM2.5, PM10, NO2, SO2, CO, O3 (OZONE), NH3</td></tr>
+      <tr><td>Auth used</td><td>data.gov.in public sample API key (rate-limited)</td></tr>
+    </table>
+    </div>
+  </div>
+  <h3>Sample of live readings actually pulled (raw API values)</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>State</th><th>City</th><th>Station</th><th>Pollutant</th><th>Avg value</th><th>Last update (IST)</th></tr></thead>
+    <tbody>
+<tr><td>Bihar</td><td>Saharsa</td><td>Police Line, Saharsa - BSPCB</td><td>CO</td><td class='num'>37</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Bihar</td><td>Samastipur</td><td>DM Office_Kasipur, Samastipur - BSPCB</td><td>SO2</td><td class='num'>16</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Chandigarh</td><td>Chandigarh</td><td>Sector-53, Chandigarh - CPCC</td><td>SO2</td><td class='num'>1</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Chandigarh</td><td>Chandigarh</td><td>Sector 22, Chandigarh - CPCC</td><td>NH3</td><td class='num'>10</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Chandigarh</td><td>Chandigarh</td><td>Sector 22, Chandigarh - CPCC</td><td>CO</td><td class='num'>57</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Chhattisgarh</td><td>Bhilai</td><td>Civic Center, Bhilai - Bhilai Steel Plant</td><td>PM10</td><td class='num'>21</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Chhattisgarh</td><td>Bhilai</td><td>Civic Center, Bhilai - Bhilai Steel Plant</td><td>NO2</td><td class='num'>16</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Chhattisgarh</td><td>Bhilai</td><td>Civic Center, Bhilai - Bhilai Steel Plant</td><td>NH3</td><td class='num'>1</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Chhattisgarh</td><td>Bhilai</td><td>Civic Center, Bhilai - Bhilai Steel Plant</td><td>SO2</td><td class='num'>11</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Delhi</td><td>Delhi</td><td>Nehru Nagar, Delhi - DPCC</td><td>NH3</td><td class='num'>7</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Delhi</td><td>Delhi</td><td>Pusa, Delhi - DPCC</td><td>SO2</td><td class='num'>11</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Delhi</td><td>Delhi</td><td>Patparganj, Delhi - DPCC</td><td>OZONE</td><td class='num'>68</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Gujarat</td><td>Ahmedabad</td><td>Chandkheda, Ahmedabad - IITM</td><td>OZONE</td><td class='num'>22</td><td>26-06-2026 20:00:00</td></tr>
+<tr><td>Gujarat</td><td>Bhavnagar</td><td>Vidhyanagar, Bhavnagar - Nexteng Enviro</td><td>OZONE</td><td class='num'>41</td><td>26-06-2026 20:00:00</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub" style="margin-top:10px">These rows were fed through the package's real ingest adapter
+    (<span class="mono">aqi_india.ingest.cpcb._normalise_ogd_records &rarr; aggregate_hourly_to_daily &rarr; tag_stations</span>,
+    <span class="mono">synthetic=False</span>), which produced 20 tagged station-days (17 label / 3 validation) keyed to
+    H3&nbsp;res-7 and stratified into IGP / Central / Peninsula / Coastal regions. Note: the daily NAQI aggregator
+    requires &ge;75% hourly completeness, so a single hourly snapshot yields valid station geometry/tagging but
+    NaN daily aggregates &mdash; expected behaviour for a one-shot snapshot, not a data error.</p>
+
+  <!-- ============ SOURCE STATUS ============ -->
+  <h2>2 &nbsp; Real-source reachability &amp; credential status</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Source</th><th>Reachable (proxy)</th><th>Real fetch verdict</th><th>Credential needed</th></tr></thead>
+    <tbody>
+      <tr><td>CPCB via data.gov.in (ground stations)</td><td class="ok">200</td>
+        <td class="ok">REAL-OK &mdash; 3,535 live rows, 10 states sampled</td><td>data.gov.in API key (sample key used)</td></tr>
+      <tr><td>NASA FIRMS (VIIRS/MODIS fires)</td><td class="ok">200</td>
+        <td class="no">BLOCKED &mdash; &ldquo;Invalid MAP_KEY&rdquo;</td><td>free <span class="mono">FIRMS_MAP_KEY</span></td></tr>
+      <tr><td>OpenAQ v3 (ground stations)</td><td class="mid">401</td>
+        <td class="no">BLOCKED &mdash; needs X-API-Key</td><td><span class="mono">OPENAQ_API_KEY</span></td></tr>
+      <tr><td>WAQI / AQICN (ground stations)</td><td class="ok">200</td>
+        <td class="no">BLOCKED &mdash; demo token returns fixed Shanghai sample, not India</td><td>per-user WAQI token</td></tr>
+      <tr><td>Sentinel-5P HCHO (TROPOMI, via GEE)</td><td class="ok">reachable</td>
+        <td class="no">BLOCKED &mdash; <span class="mono">earthengine-api</span> not installed &amp; no EE auth</td>
+        <td>EE service-account JSON + registered project</td></tr>
+      <tr><td>MODIS MAIAC AOD (via GEE)</td><td class="ok">reachable</td>
+        <td class="no">BLOCKED &mdash; same as S5P</td><td>EE service-account JSON + project</td></tr>
+      <tr><td>Copernicus CDS (ERA5)</td><td class="ok">200</td>
+        <td class="no">BLOCKED &mdash; <span class="mono">cdsapi</span> not installed, no <span class="mono">.cdsapirc</span></td>
+        <td>CDS API key</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <!-- ============ OBJECTIVE 1 ============ -->
+  <h2>3 &nbsp; Objective 1 &mdash; Daily surface AQI <span class="tag tag-syn">SYNTHETIC&nbsp;DEMO</span></h2>
+  <p class="sub">Per-pollutant LightGBM (column&rarr;surface) trained against CPCB-surrogate labels on a synthetic
+    India grid; scored with a cross-validation ladder (random&nbsp;k-fold &rarr; leave-station-out &rarr;
+    spatiotemporal-blocked). Numbers below are deterministic demo output (seed&nbsp;42) and measure plumbing, not skill.</p>
+  <div class="grid cards">
+    <div class="card"><div class="k">Feature matrix</div><div class="v">7200&times;41</div></div>
+    <div class="card"><div class="k">AQI agreement R&sup2;</div><div class="v good">0.984</div></div>
+    <div class="card"><div class="k">Pearson r</div><div class="v good">0.992</div></div>
+    <div class="card"><div class="k">RMSE (AQI)</div><div class="v">16.9</div></div>
+    <div class="card"><div class="k">MAE (AQI)</div><div class="v">10.2</div></div>
+    <div class="card"><div class="k">NAQI 6-band acc.</div><div class="v">88.7%</div></div>
+  </div>
+  <h3>CV ladder &mdash; out-of-fold Pearson r (leakage check)</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Pollutant</th><th class="num">random k-fold</th><th class="num">leave-station-out</th>
+      <th class="num">spatiotemporal-blocked</th><th class="num">&Delta;r (STB&minus;rand)</th></tr></thead>
+    <tbody>
+      <tr><td>PM2.5</td><td class="num">0.985</td><td class="num">0.984</td><td class="num">0.968</td><td class="num">&minus;0.017</td></tr>
+      <tr><td>PM10</td><td class="num">0.982</td><td class="num">0.982</td><td class="num">0.965</td><td class="num">&minus;0.017</td></tr>
+      <tr><td>NO2</td><td class="num">0.967</td><td class="num">0.967</td><td class="num">0.962</td><td class="num">&minus;0.006</td></tr>
+      <tr><td>SO2</td><td class="num">0.931</td><td class="num">0.930</td><td class="num">0.922</td><td class="num">&minus;0.009</td></tr>
+      <tr><td>CO</td><td class="num">0.952</td><td class="num">0.952</td><td class="num">0.946</td><td class="num">&minus;0.007</td></tr>
+      <tr><td>O3</td><td class="num">0.774</td><td class="num">0.772</td><td class="num">0.759</td><td class="num">&minus;0.015</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="grid figs" style="margin-top:16px">
+    <figure><img src="figures/obj1_aqi_map.png" alt="Synthetic surface-AQI choropleth"><figcaption><span class="tag tag-syn">SYNTHETIC</span> Daily surface-AQI choropleth over India (peak-fire day) with IGP inset.</figcaption></figure>
+    <figure><img src="figures/obj1_cv_metrics.png" alt="CV ladder bar chart"><figcaption><span class="tag tag-syn">SYNTHETIC</span> CV ladder &mdash; out-of-fold skill drops random&rarr;blocked, exposing leakage.</figcaption></figure>
+    <figure><img src="figures/obj1_validation.png" alt="AQI agreement hexbin"><figcaption><span class="tag tag-syn">SYNTHETIC</span> AQI agreement: 1:1 hexbin + residual diagnostics vs CPCB-surrogate.</figcaption></figure>
+  </div>
+
+  <!-- ============ OBJECTIVE 2 ============ -->
+  <h2>4 &nbsp; Objective 2 &mdash; HCHO hotspots &amp; fire transport <span class="tag tag-syn">SYNTHETIC&nbsp;DEMO</span></h2>
+  <p class="sub">HCHO hotspot consensus (Gi* + LISA + percentile, &ge;2-of-3), Emerging Hot Spot Analysis,
+    fire&rarr;HCHO lagged cross-correlation and Lagrangian transport attribution on the synthetic burning-season cube.</p>
+  <div class="grid cards">
+    <div class="card"><div class="k">Confirmed hotspots</div><div class="v">771</div></div>
+    <div class="card"><div class="k">Consensus centroid</div><div class="v" style="font-size:1.05rem">29.46&deg;N, 76.24&deg;E</div></div>
+    <div class="card"><div class="k">Fire&rarr;HCHO xcorr peak</div><div class="v good">r=0.40</div></div>
+    <div class="card"><div class="k">Lag</div><div class="v">0 day</div></div>
+    <div class="card"><div class="k">Dominant pathway</div><div class="v" style="font-size:1.1rem">NW corridor</div></div>
+    <div class="card"><div class="k">CWT source max</div><div class="v" style="font-size:1.05rem">28.75&deg;N, 76.75&deg;E</div></div>
+  </div>
+  <div class="grid figs" style="margin-top:16px">
+    <figure><img src="figures/obj2_hcho_hotspots.png" alt="HCHO hotspots"><figcaption><span class="tag tag-syn">SYNTHETIC</span> Mean HCHO column with &ge;2-of-3 hotspot polygons, FIRMS overlay, mean-wind quiver.</figcaption></figure>
+    <figure><img src="figures/obj2_ehsa.png" alt="EHSA category map"><figcaption><span class="tag tag-syn">SYNTHETIC</span> Emerging Hot Spot Analysis &mdash; new / intensifying / persistent patterns.</figcaption></figure>
+    <figure><img src="figures/obj2_fire_hcho_xcorr.png" alt="fire-HCHO cross-correlation"><figcaption><span class="tag tag-syn">SYNTHETIC</span> Deseasonalised fire&rarr;HCHO lagged cross-correlation, 0&ndash;2 day window.</figcaption></figure>
+    <figure><img src="figures/obj2_source_map.png" alt="CWT source map"><figcaption><span class="tag tag-syn">SYNTHETIC</span> CWT source-apportionment field with back-trajectories and receptor stars.</figcaption></figure>
+  </div>
+
+  <footer>
+    <p><strong>aqi_india</strong> &middot; BAH 2026 PS3 &middot; static results dashboard.
+    The package's FastAPI/Streamlit service is a stub and its light dependency set is ~1.4&nbsp;GB
+    (lightgbm, geopandas, rioxarray, xarray), so it cannot run on serverless functions; this static
+    dashboard is the deployable artifact. Live CPCB data fetched 2026-06-26 from data.gov.in resource
+    3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69. All Objective&nbsp;1/2 figures and metrics are synthetic-demo output.</p>
+  </footer>
+
+</main>
+</body>
+</html>

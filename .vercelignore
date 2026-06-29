@@ -1,0 +1,16 @@
+# Deploy only the static results dashboard (site/). Exclude everything else.
+.venv/
+venv/
+data/
+.git/
+.pytest_cache/
+.ruff_cache/
+notebooks/
+tests/
+scripts/
+src/
+conf/
+docs/
+reports/
+*.pyc
+__pycache__/

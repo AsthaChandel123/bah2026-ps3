@@ -1,0 +1,19 @@
+# @package datasets.firms
+# NASA FIRMS active-fire (VIIRS 375m primary + MODIS climatology).
+name: firms
+provider: NASA FIRMS
+access: http_api
+api_template: "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{MAP_KEY}/{SOURCE}/{W},{S},{E},{N}/{DAY_RANGE}/{DATE}"
+country_template: "https://firms.modaps.eosdis.nasa.gov/api/country/csv/{MAP_KEY}/{SOURCE}/IND/{DAY_RANGE}"
+sources:
+  - VIIRS_SNPP_NRT
+  - VIIRS_NOAA20_NRT
+  - VIIRS_NOAA21_NRT
+  - MODIS_NRT
+archive_sources: [VIIRS_SNPP_SP, MODIS_SP]
+gee_raster: FIRMS              # MODIS-only rasterized collection in GEE
+india_bbox: [68, 6, 98, 38]
+rate_limit: 5000 transactions / 10 min
+map_key_env: FIRMS_MAP_KEY
+fields: [latitude, longitude, frp, acq_date, acq_time, daynight, confidence]
+role: daily fire-count/FRP series; VIIRS 375m detects 3-5x more small stubble fires
